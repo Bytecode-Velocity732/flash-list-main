@@ -1,4 +1,6 @@
-import { BaseItemAnimator } from "recyclerlistview";
+import { BaseItemAnimator ,RecyclerListViewProps} from "recyclerlistview";
+import { Platform, ScrollViewProps } from "react-native";
+import { BidirectionalScrollView } from "../../BiDirectionalScrollView";
 
 const PlatformConfig = {
   defaultDrawDistance: 250,
@@ -19,10 +21,21 @@ const getItemAnimator = (): BaseItemAnimator | undefined => {
 const getFooterContainer = (): React.ComponentClass | undefined => {
   return undefined;
 };
-
+const getBidirectionalScrollView = (
+  experimentalScrollPositionManagement: boolean,
+  renderScrollComponent:
+    | React.FC<ScrollViewProps>
+    | React.ComponentType<ScrollViewProps>
+    | undefined
+) => {
+  return experimentalScrollPositionManagement && Platform.OS === "android"
+    ? (BidirectionalScrollView as unknown as RecyclerListViewProps["externalScrollView"])
+    : (renderScrollComponent as unknown as RecyclerListViewProps["externalScrollView"]);
+};
 export {
   PlatformConfig,
   getCellContainerPlatformStyles,
   getItemAnimator,
   getFooterContainer,
+  getBidirectionalScrollView
 };

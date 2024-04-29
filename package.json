@@ -1,6 +1,6 @@
 {
   "name": "@shopify/flash-list",
-  "version": "1.6.4",
+  "version": "1.6.4-beta.40",
   "keywords": [
     "react-native",
     "recyclerview",
@@ -35,7 +35,7 @@
     "lint:fix": "yarn eslint . --ext .ts,.tsx --fix",
     "type-check": "yarn tsc --pretty --noEmit",
     "build": "tsc -b",
-    "fixture:rn:up": "cd fixture/react-native && yarn && cd ios && bundle exec pod install && cd ../../../",
+    "fixture:rn:up": "cd fixture/react-native && yarn && cd ios && bundle exec pod install --verbose && cd ../../../",
     "fixture:expo:up": "cd fixture/expo && yarn && cd ../../",
     "fixture:rn:android": "cd fixture/react-native && yarn react-native run-android && yarn build --watch",
     "fixture:rn:ios": "cd fixture/react-native && yarn react-native run-ios && yarn build --watch",

@@ -42,7 +42,7 @@ export class ScrollViewComponent extends ScrollViewRNRaw {
   };
 
   render() {
-    const NativeDirectionalScrollView = BidirectionalFlatlist;
+    const NativeDirectionalScrollView = BidirectionalList;
     const NativeDirectionalScrollContentView = View;
 
     const contentContainerStyle = [this.props.contentContainerStyle];

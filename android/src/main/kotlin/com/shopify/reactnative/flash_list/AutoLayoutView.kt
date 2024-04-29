@@ -11,6 +11,10 @@ import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.facebook.react.views.view.ReactViewGroup
+import android.util.Log
+import com.facebook.react.views.scroll.ReactScrollView
+
+
 
 
 /** Container for all RecyclerListView children. This will automatically remove all gaps and overlaps for GridLayouts with flexible spans.
@@ -78,7 +82,7 @@ class AutoLayoutView(context: Context) : ReactViewGroup(context) {
             alShadow.offsetFromStart = if (alShadow.horizontal) left else top
             alShadow.clearGapsAndOverlaps(
                     positionSortedViews,
-                    getParentScrollView() as ScrollView,
+                    getDoublyParentScrollView(),
             )
         }
     }
@@ -136,6 +140,18 @@ class AutoLayoutView(context: Context) : ReactViewGroup(context) {
             }
             return@let null
         }
+    }
+
+    private fun getDoublyParentScrollView(): ReactScrollView? {
+        var autoLayoutParent = parent;
+        while (autoLayoutParent != null) {
+            Log.d("autoLayoutParentautoLayoutParent",autoLayoutParent::class.java.typeName)
+            if (autoLayoutParent is ReactScrollView) {
+                return autoLayoutParent as ReactScrollView
+            }
+            autoLayoutParent = autoLayoutParent.parent;
+        }
+        return null
     }
 
     private fun getParentScrollView(): View? {

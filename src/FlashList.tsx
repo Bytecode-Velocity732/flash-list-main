@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ElementType } from "react";
 import {
   View,
   RefreshControl,
@@ -647,7 +647,7 @@ class FlashList<T> extends React.PureComponent<
   private getValidComponent(
     component: React.ComponentType | React.ReactElement | null | undefined
   ) {
-    const PassedComponent = component;
+    const PassedComponent = component as ElementType;
     return (
       (React.isValidElement(PassedComponent) && PassedComponent) ||
       (PassedComponent && <PassedComponent />) ||

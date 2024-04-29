@@ -1,6 +1,7 @@
 package com.shopify.reactnative.flash_list
+import com.facebook.react.views.scroll.ReactScrollView
+import android.util.Log
 
-import android.widget.ScrollView
 
 class AutoLayoutShadow {
     var horizontal: Boolean = false
@@ -24,7 +25,7 @@ class AutoLayoutShadow {
 
     /** Checks for overlaps or gaps between adjacent items and then applies a correction (Only Grid layouts with varying spans)
      * Performance: RecyclerListView renders very small number of views and this is not going to trigger multiple layouts on Android side. Not expecting any major perf issue. */
-    fun clearGapsAndOverlaps(sortedItems: Array<CellContainer>, scrollView: ScrollView) {
+    fun clearGapsAndOverlaps(sortedItems: Array<CellContainer>, reactScrollView: ReactScrollView?) {
         var maxBound = 0
         var minBound = Int.MAX_VALUE
         var maxBoundNeighbour = 0
@@ -98,7 +99,19 @@ class AutoLayoutShadow {
                 if (cell.stableId == anchorStableId) {
                     if (minValue != anchorOffset) {
                         val diff = minValue - anchorOffset
-                        (scrollView as DoubleSidedScrollView).setShiftOffset(diff.toDouble())
+                        if(reactScrollView is DoubleSidedScrollView){
+                            val methodName = "setShiftOffset"
+                            val functionExists = try {
+                                val method = reactScrollView.javaClass.getMethod(methodName, Double::class.java)
+                                method != null
+                            } catch (e: NoSuchMethodException) {
+                                false
+                            }
+                            if (functionExists) {
+                            Log.d("functionExistsfunctionExistsss","functionExistsfunctionExists")
+                            reactScrollView.setShiftOffset(diff.toDouble())
+                            }
+                        }
                         break
                     }
                 }
